@@ -316,6 +316,7 @@ All the experimental quantities were collected from the literature \todo{Except 
 \subsection{Simulational data acquisition and analysis}
 %
 The simulation trajectories used in this work were collected from the Zenodo repository (\url{zenodo.org}) with majority of the data originating from the NMRlipids Project~\cite{botan15,catte16} (\url{nmrlipids.blogspot.fi}).
+\todo{SAMULI: I think that we should define the criteria for selecting the analyzed simulations here.}
 Table~\ref{tab:standr} details, with references to the trajectory files, the simulations of pure POPC bilayers at/near room temperature and at full hydration, whereas
 Table~\ref{tab:chol} lists simulations including cholesterol;
 Table~\ref{tab:hydr} simulations with varying hydration; and
@@ -493,6 +494,8 @@ Slipids \cite{jambeck12b}%/---
 %\onecolumn
 %\end{multicols}
 
+\todo{SAMULI: I would emphasize here more the automatization of the analysis, and also mention that the mapping file was used
+to enable automatic analysis of simulations with different force fields having different atom names (if this was the case?).}
 The simulation data were analyzed using in-house scripts. These are available on GitHub \cite{citehere} along with a Python notebook outlining an example analysis run.
 After downloading the necessary files from Zenodo, the trajectory was processed with Gromacs \texttt{gmx trjconv} to make the molecules whole.
 The C--H bond order parameters  $S_\mathrm{CH}$, see Eq.~\eqref{eq:OP}, were then calculated with the \texttt{calcOrderParameters.py}\cite{citegithubhere} script that uses the MDanalysis\cite{XXX} Python library.
@@ -500,22 +503,28 @@ The C--H bond order parameters  $S_\mathrm{CH}$, see Eq.~\eqref{eq:OP}, were the
 The \mbox{C--H} bond correlation functions
 $g(\tau)$, see Eq.~\eqref{eq:BCF},
 were calculated with Gromacs5.1.4\cite{XXX} \texttt{gmx rotacf};
+\todo{SAMULI: I do not understand this:}
 note that on simulational (fast) time scales $g = g_\mathrm{s} g_\mathrm{f}= g_\mathrm{f}$.
 %
 To obtain the $g'_\mathrm f$,
 the $S_\mathrm{CH}$ were used to
 normalize the $g_\mathrm f$ following Eq.~\eqref{eq:nBCF}.
 
-The effective correlation times $\tau_\mathrm e$ were then calculated by integrating $g'_\mathrm f(\tau)$,
-see Eqs.~\eqref{eq:teff} and~\eqref{eq:nBCF},
-over time from $\tau=0$ until $\tau = t_0$.
-Here
+The effective correlation times $\tau_\mathrm e$ were then calculated
+%by integrating $g'_\mathrm f(\tau)$,
+%see
+from Eq.~\eqref{eq:teff} %and~\eqref{eq:nBCF},
+integrating from $\tau=0$ until $\tau = t_0$, where
+%Here
+%$t_\mathrm 0$ 
 $t_0 = \min
 	\{
 	t\,|\,g'(t)=0
 	\}
-$,
-that is, $t_\mathrm 0$ is the first time point at which $g'_\mathrm f$ reached zero.
+        $
+        is the first time point at which $g'_\mathrm f$ reached zero.
+        %,
+%that is, 
 %
 If $g'_\mathrm f$ did not reach zero within 
 $t_\mathrm{anal}/2$, the 
@@ -547,16 +556,19 @@ Performing linear error propagation on Eq.~\eqref{eq:nBCF} gives
 \Delta S_\mathrm{CH}.
 \end{split}
 \end{align}
-Here the $\Delta S_\mathrm{CH}$ was determined as in the NMR\-lipids Project~\cite{botan15}:
-as the standard error of the mean of the $S_\mathrm{CH}$ of all the $N_\mathrm l$ individual lipids in the system.
+Here the $\Delta S_\mathrm{CH}$ was determined %as in the NMR\-lipids Project~\cite{botan15}:
+as the standard error of the mean of the $S_\mathrm{CH}$
+when averaged over $N_\mathrm l$ individual lipids in the system~\cite{botan15}.
 %
 Similarly, we quantified the error on $g_{\mathrm{f}}(\tau)$
-by first determining an individual correlation function $g^m_{\mathrm{f}}(\tau)$ for each lipid $m$
-over the whole trajectory, and then obtaining the error estimate
+by first determining the correlation function, $g^m_{\mathrm{f}}(\tau)$,
+for each individual lipid $m$, %over the whole trajectory,
+and then obtaining the error estimate
 $\Delta g_{\mathrm{f}}(\tau)$
-as the standard error of the mean over the $N_\mathrm l$ lipids.
+as the standard error of the mean over the $N_\mathrm l$ lipids
 %
-Importantly, this gives an uncertainty estimate at each time point $\tau$.
+%Importantly, this gives an uncertainty estimate
+for each time point $\tau$.
 
 To obtain the lower bound on $\tau_\mathrm e$, we integrate the function
 $g'_{\mathrm{f}}(\tau) - \Delta g'_{\mathrm{f}}(\tau)$ over time from $\tau=0$ until $\tau=t_\mathrm l$.
@@ -590,7 +602,10 @@ that this is not yet sufficient, because there could be slow processes that our 
 able to see. Although these would contribute to $\tau_\mathrm e$ with a low weight,
 their contribution over long times could still add up to a sizable effect on $\tau_\mathrm e$.
 %
-That said, it seems feasible to assume (see Fig. \ref{fig:schem_teff}A) that there are no longer-time contributions
+That said, it seems feasible
+\todo{SAMULI: I think that we can say stronger than "seems feasible to assume" because experiments in Tiago's 2015 paper indicate that these,
+or maybe even shorter, timescales are not present. Maybe Tiago can comment this?}
+to assume (see Fig. \ref{fig:schem_teff}A) that there are no longer-time contributions
 to $g_\mathrm f$ than something that decays with a time constant of $10^{-6}$~s.
 %
 We use this as our worst case estimate to assess the upper bound for $\tau_\mathrm e$, and
@@ -605,6 +620,7 @@ t_\mathrm u= \min
 $
 onwards comes solely from this slowest process.
 %
+\todo{SAMULI: I do not understand this:}
 The additional contribution to the upper bound for $\tau_\mathrm e$ then reads
 $
 \Delta g'_\mathrm f(t_\mathrm u) \times \left(\exp(-t_\mathrm u / 10^{-6}\,\mathrm s) - \exp(-1)\right) \times 10^{-6}\,\mathrm s.
@@ -629,6 +645,14 @@ based on the Fourier transformation\cite{ferreira15}
 j{(\omega)}=2(1-S_\mathrm{CH})\sum_{i=1}^{N}\alpha_{i}\frac{\tau_{i}}{1+\omega\tau_{i}} .
 \end{equation}
 %
+\todo{SAMULI: I think that below text may sound weird for NMR people.
+  I think that bonds do not have $R_{1}$ rates, nucleus has.
+  I think that this should be rewritten in the way that
+  we talk about 13C spin relaxation from C-H coupling in the
+  way that it still looks like that we understand that this is actually a spin system.
+  This is not easy, and right now I cannot figure out an easy way to it.
+  I can think this later if needed.
+}
 The $R_{1}$ rate of a given C--H bond was
 first calculated separately for each lipid $m$ (using Eq.~\eqref{eq:R1} with $N_\mathrm{H}=1$, and $j^m(\omega)$ obtained for the normalized correlation function ${g'_\mathrm f}^m$). The resulting $N_\mathrm{l}$ measurements per bond were then assumed independent:
 Their mean gave the $R_1$ rate of the bond, and 
@@ -636,17 +660,19 @@ standard error of the mean its uncertainty.
 %
 The total $R_1$ rate of a given carbon was obtained as a sum of the $R_1$ rates of its C--H bonds.
 %
+\todo{SAMULI: When does this happen:}
 When several carbons contribute to the experimental $R_1$ rate of a carbon segment, the carbon-wise $R_1$ rates were averaged to obtain the segment-wise $R_1$ rate.
 %
 The segment-wise error estimates were obtained by standard error propagation, starting from the uncertainties of the $R_1$ rates of the C--H bonds.
 
-To gain some qualitative insight on the time scales at which the main contributions to the (headgroup) $R_1$ rates arise,
-we also looked at 'cumulative' $R_1$ rates, $R_1(\tau)$. These
-contained just those contributions in the sum of Eq.~\eqref{eq:j} for which $\tau_i<\tau$.
+To gain insight on the time scales at which the main contributions to the $R_1$ rates arise,
+we calculated 'cumulative' $R_1$ rates, $R_1(\tau)$, which
+contained the contributions of the sum in Eq.~\eqref{eq:j} for which $\tau_i<\tau$.
 Note that here the $g'_\mathrm{f}$ averaged over lipids was used;
 therefore, the 'cumulative' $R_1(\tau\to\infty)$ does not necessarily have exactly
 the same numerical value as the actual $R_1$.
 
+\todo{SAMULI: Do we need this paragraph at all?}
 Finally, we note that the fit of Eq.~\eqref{eq:weights} provides an alternative
 to estimating $\tau_\mathrm{e}$, because
 \begin{equation}
