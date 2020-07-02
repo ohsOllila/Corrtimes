@@ -840,16 +840,13 @@ Were the simulations done at the experimental 298\,K, the overestimation of $\ta
 \todo{HA: add new CHARMM36 data to plot}
 
 
-\subsection*{Dynamics of headgroup segments in CHARMM36.}
-
-Figure~\ref{fig:cumulativeR1s}A zooms in on the headgroup ($\gamma$, $\beta$, $\alpha$) segments,
-whose $\tau_\mathrm e$ were not clearly visible on the scale of Fig.~\ref{fig:teff_R1}.
-%
-For all three, CHARMM36 matches the experimental $\tau_\mathrm e$,
-but overestimates $R_1$.
-%
-No other force field does any better for $\gamma$, but
-for $\beta$ and $\alpha$ Slipids provides almost perfect dynamics.
+\subsection*{Internal motions of POPC headgroup in MD simulations}
+Because lipid headgroups facing toward water phase are the first membrane parts that interact
+with approaching proteins, understanding their conformations and dynamics is crucial to
+explain biological processes where proteins binding to membranes plays critical role.
+Yet, the analysis of lipid headgroup dynamics from MD simulations and NMR experiments has gained
+much less attention than acyl chains \cite{ollila16,??}. Therefore, we focus here to discuss
+lessons learned on lipid headgroup dynamics from the analysis of the databank.
 
 \begin{figure}[!h]
 \centering
@@ -864,45 +861,88 @@ In B and C, a sliding average over 5 neighboring data points is shown.
 \label{fig:cumulativeR1s}
 \end{figure}
 
-To investigate where the differences between force fields arise, we visualize the 
-'cumulative' $R_1(\tau)$ in Fig.~\ref{fig:cumulativeR1s}B.
+Figure~\ref{fig:cumulativeR1s}A zooms in on the headgroup ($\gamma$, $\beta$, $\alpha$) segments,
+whose $\tau_\mathrm e$ were not clearly visible on the scale of Fig.~\ref{fig:teff_R1}.
+%
+For all three, CHARMM36 matches the experimental $\tau_\mathrm e$,
+but overestimates $R_1$,
+%
+%No other force field does any better for $\gamma$, but
+while Slipids provides almost perfect dynamics for $\beta$ and $\alpha$ carbons.
+Therefore, Slipids simulation gives a realistic model for the conformational dynamics
+in this region, but relative weight of timescales around $\sim$1 ns are overestimated
+in CHARMM36 simulations.
+
+To further investigate the internal timescales of lipids in simulations,
+we plot the distribution of relative weights, $\alpha_i$ in Eq.~\eqref{eq:weights},
+resulting from the fitting to the rotational correlation functions from simulatons 
+%This also manifests in the
+%distribution of fitting weights ($\alpha_i$ in Eq.~\eqref{eq:weights})
+in Fig.~\ref{fig:cumulativeR1s}C, and their 
+%where the differences between force fields arise, we visualize the 
+'cumulative' contribution to $R_1(\tau)$ in Fig.~\ref{fig:cumulativeR1s}B.
+\todo{SAMULI: maybe change the order of B and C in figure~\ref{fig:cumulativeR1s}?}
+
+\todo{SAMULI: Maybe this to methods:}
 It is obtained, as detailed in Methods,
 by including in the sum of Eq.~\eqref{eq:j} only terms with $\tau_i<\tau$.
 Consequently, at $\tau\to\infty$ the 'cumulative' $R_1(\tau)$ approaches the actual $R_1$. Ranges of steepest increase therefore indicate time scales that most strongly contribute to $R_1$ rates.
 
-Figure~\ref{fig:cumulativeR1s}B shows
-that for models that overestimate the $R_1$ rate of $\gamma$
-(MacRog, CHARMM36, and Slipids, see Fig.~\ref{fig:cumulativeR1s}A)
-the major contribution to $R_1$ arises at $\tau>50$\,ps, whereas those underestimating the $R_1$ 
-(Lipid14 and ECC, see Fig.~\ref{fig:teff_R1})
-the major contribution comes from $\tau<50$\,ps. 
 %
-This also manifests in the
-distribution of fitting weights ($\alpha_i$ in Eq.~\eqref{eq:weights}) in Fig.~\ref{fig:cumulativeR1s}C:
-The earlier the non-zero weights occur, the smaller is the resulting $R_1$.
-
-
-For the $\beta$ and $\alpha$ segments, Fig.~\ref{fig:cumulativeR1s}B shows
-that the main contribution to $R_1$ rates arises from processes
-between 200~ps and 2~ns.
+% SAMULI: I have commented this paragraph out
 %
-As CHARMM36 has the largest weights of all models in this window (Fig.~\ref{fig:cumulativeR1s}C),
-it overestimates $R_1$.
+%Figure~\ref{fig:cumulativeR1s}B shows
+%that for models that overestimate the $R_1$ rate of $\gamma$
+%(MacRog, CHARMM36, and Slipids, see Fig.~\ref{fig:cumulativeR1s}A)
+%the major contribution to $R_1$ arises at $\tau>50$\,ps, whereas those underestimating the $R_1$ 
+%(Lipid14 and ECC, see Fig.~\ref{fig:teff_R1})
+%the major contribution comes from $\tau<50$\,ps. 
+%%
+%The earlier the non-zero weights occur, the smaller is the resulting $R_1$.
+
+The dominant relative timescales with the largest weight factors, $\alpha_i$,
+are below 100 ps in all models, except in CHARMM36.
+The large relative weights between 200~ps and 2~ns
+explain the overestimated $R_1$ rates
+%closer to $\sim$1ns timescales that mostly
+%contribute to the 
+for the $\beta$ and $\alpha$ segments in CHARMM36 in Fig.~\ref{fig:cumulativeR1s}.
+%shows
+%that the main contribution to $R_1$ rates arises from processes
+%
+%
+%As CHARMM36 has the largest weights of all models in this window (Fig.~\ref{fig:cumulativeR1s}C),
+%it overestimates $R_1$.
 %
 %For example
-In contrast, Slipids, which has simultaneously $R_1$ and $\tau_\mathrm e$ correct,
-has its largest weights at $\tau<200$\,ps.
+All the other models reproduce $R_1$ rates closer to experiments for
+these segments, while only Slipids simultaneously gives the correct $\tau_\mathrm e$.
+%correct,
+%has its largest weights at $\tau<200$\,ps.
 %
-Indeed, considerable weights
-at short time scales ($<10$\,ps in $\alpha$ for Lipid14, ECC, Berger) and
-at long time scales ($>10$\,ns in both $\beta$ and $\alpha$ for MacRog and Berger)
-do not manifest at all in the $R_1$ rates.
+The overestimated $\tau_\mathrm e$ values in MacRog and Berger simulations
+can be explained by the relative contributions from long time scales
+around $\sim ??$\,ns. \todo{SAMULI: I think we could mention here the approximative location of the peak maximum,
+  but it is hard to see now because not all x-axis values are there.} % in both $\beta$ and $\alpha$ for MacRog and Berger)
+On the other hand, the underestimated $\tau_\mathrm e$ values in Lipid14, ECC, Berger
+simulations can be explained by significant relative contributions from 
+%Indeed, considerable weights
+short time scale dynamics below $\sim20$\,ps.% in $\alpha$ for Lipid14, ECC, Berger) and
+Such short and long time scale contributions are not present in Slipids that
+correctly reproduces the experimental values for both $\tau_\mathrm e$ and $R_1$,
+suggesting the dynamics of $\alpha$ and $\beta$ segments in POPC headgroup occurs
+between $\sim$20 ps - 10 ns with the dominant timescales between 40-70 ps.
+%do not manifest at all in the $R_1$ rates.
 %
-However, the latter contribute heavily on $\tau_\mathrm e$,
-which is thus considerably overestimated by MacRog and Berger (Fig.~\ref{fig:teff_R1}).
+%However, the latter contribute heavily on $\tau_\mathrm e$,
+%which is thus considerably overestimated by MacRog and Berger (Fig.~\ref{fig:teff_R1}).
 
-What are the motions in the 0.2--2\,ns window that are over-presented in CHARMM36?
-Identifying them and speeding them up would improve the model dynamics.
+It would be highly interesting to identify the origin of observed artificial timescales,
+particularly for the 0.2--2\,ns window that are over-presented in CHARMM36, and
+propose how those could be corrected in the simulation models.
+%observed in simulations models, and especially the 
+%What are the motions in the 0.2--2\,ns window that are over-presented in CHARMM36?
+%Identifying them and speeding them up would improve the model dynamics.
 However, the connection between the fitted correlation times and the correlation times of distinct motional processes, such as dihedral rotations and lipid wobbling, turns out to be highly non-trivial; we thus refrain from further analysis here.
 
 \subsection*{Effect of cholesterol.}
