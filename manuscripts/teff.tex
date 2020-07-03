@@ -946,15 +946,27 @@ propose how those could be corrected in the simulation models.
 However, the connection between the fitted correlation times and the correlation times of distinct motional processes, such as dihedral rotations and lipid wobbling, turns out to be highly non-trivial; we thus refrain from further analysis here.
 
 \subsection*{Effect of cholesterol.}
+Cholesterol is essential component in cell membranes with various biological functions \cite{??}.
+While cholesterol is well known to order the acyl chains in cell membranes,
+its effect on headgroup is more controversial \cite{??}. Lipid headgroups are proposed
+to reorganize to shield cholesterol from interaction with water \cite{??}. However,
+significant conformational changes in headgroup are not observed in NMR experiments upon addition
+of even 50\% of cholesterol, while acyl chains exhibit substantial ordering,
+suggesting that acyl chain and headgroup regions behave essentially independently \cite{ferreira13,botan15}.
+On the other hand, the headgroups could shield water-cholesterol interactions
+without changes in internal conformational ensemble by reorienting headgroups laterally on
+top of cholesterol. In this case, the dynamics of headgroup dynamics should be affected by cholesterol. 
+
 The experimental effective correlation times $\tau_\mathrm e$
 (Fig.~\ref{fig:chol}A, top panels)
-show that when cholesterol is added,
-the glycerol region conformational dynamics
-slow down markedly.
+show that 
+the conformational dynamics of glycerol backbone and acyl chains
+%region
+slow down markedly when cholesterol is added.
 %
-The tail segments slow down too,
-the effect increasing towards the backbone.
-
+%The tail segments slow down too,
+%the effect increasing towards the backbone.
+%
 In stark contrast, however,
 the $\tau_\mathrm e$ of headgroup segments ($\gamma$, $\beta$, $\alpha$)
 are unaffected by cholesterol.
@@ -967,19 +979,20 @@ the experimental $R_{1}$ rates (Fig.~\ref{fig:chol}A, lower panels).
 That said,
 there is a small but measurable impact on $R_1$ at $\gamma$.
 
-All the force fields investigated qualitatively reproduce the increase in $\tau_\mathrm e$ (see Fig.~\ref{fig:chol}B):
-Slipids gives the best magnitude estimates, while CHARMM36 and MacRog clearly overestimate the changes at the glycerol, C2, and C3 carbons. Notably, MacRog \todo{and Berger?} erroneously predict slow down also for the $\beta$ and $\alpha$ carbons, for which experiments detect no change.
+All the force fields investigated qualitatively reproduce the increase in $\tau_\mathrm e$ in acyl chain region (see Fig.~\ref{fig:chol}B):
+Slipids gives the best magnitude estimates, while CHARMM36 and MacRog clearly overestimate the changes at the glycerol, C2, and C3 carbons.
+Notably, MacRog \todo{and Berger?} erroneously predict slow down also for the $\beta$ and $\alpha$ carbons in headgroup, for which experiments detect no change.
 %
 Note that,  while CHARMM36 correctly shows no chance in $\tau_\mathrm{e}$
-of the $\gamma$, $\beta$, and $\alpha$ carbons,
+of the headgroup $\gamma$, $\beta$, and $\alpha$ carbons,
 it predicts a non-zero $\Delta R_{1}$ for all three, indicating some inaccuracies in the
 headgroup rotational dynamics. % at shorter time-scales.
 Such inaccuracies might be reflected in the recent findings~\cite{leeb18}
 (obtained using CHARMM36)
 that 
 %(at least at small cholesterol concentrations)
-the headgroups of PCs neighbouring a cholesterol (within 6.6\,\AA) spend more time on top of the cholesterol than elsewhere;
-such arrested rotations could manifest on $\tau_\mathrm e$ and $R_1$.
+the headgroups of PCs neighbouring a cholesterol (within 6.6\,\AA) spend more time on top of the cholesterol than elsewhere.
+%;such arrested rotations could manifest on $\tau_\mathrm e$ and $R_1$.
 %
 Interestingly, 
 the tail $\Delta R_{1}$ seem to be pretty well reproduced by
@@ -1008,8 +1021,19 @@ all three all-atom force fields, whereas Berger fails to capture the change at t
 \todo{Check if cholesterol data is in full hydration}
 \end{figure}
 
+In conclusion, the experiments suggest that acyl chain ordering upon cholesterol addition is accomppanied
+with slower internal dynamics in hydrophobic core and glycerol backbone region, while headgroup dynamics is almost
+intact even with 50\% of cholesterol, supporting the previous ideas that acyl chains and headgroup can respond
+almost independently on even large membrane distractions.
+In line with general picture from order parameters \cite{ollila16}, MD simulations capture the changes
+in acyl chain region rather well, but changes in headgroup and glycerol backbone are often overestimated.
 
-\subsection*{Effect of drying.}
+\subsection*{Effect of drying.} \todo{SAMULI: I would use dehydration instead of drying.}
+Membrane fusion is always preceded by dehydration of the water between opposing membranes.
+Lipid bilayers in low hydrated conditions are also found, for example, from skin tissue.
+Therefore, the influence of dehydration of lipid bilayers may play a role, for example,
+also in the rate of synaptic vesicle fusion and drying of skin. 
+
 Figure~\ref{fig:hydration}A shows how a mild dehydration affects
 C--H bond dynamics in the PC headgroup and glycerol backbone;
 the plot compares the experimental effective correlation times $\tau_\mathrm e$
@@ -1123,7 +1147,9 @@ but also for studies of inter\-membrane interactions, such as membrane fusion, b
 
 
 \subsection*{Effect of cation binding.}
-\todo{MARKUS: I have started to think that we maybe should drop this section, because we do not have any experimental data to compare against. However, if we do decide to keep it, to me it seems that our main point here is not on the effects monovalent salt, but rather on the effects of cation binding. Therefore, it would be better to plot $\Delta\tau_\mathrm e$ as a function of the bound cation charge, as we did in Fig.~3 of Ref.~\citenum{catte16}; then we could also include calcium data.}
+\todo{MARKUS: I have started to think that we maybe should drop this section, because we do not have any experimental data to compare against. However, if we do decide to keep it, to me it seems that our main point here is not on the effects monovalent salt, but rather on the effects of cation binding. Therefore, it would be better to plot $\Delta\tau_\mathrm e$ as a function of the bound cation charge, as we did in Fig.~3 of Ref.~\citenum{catte16}; then we could also include calcium data.
+SAMULI: I agree with Markus. If kept, I would focus on calcium data from most realistic models, i.e., ECC.}
+
 
 Finally, we comment on the response of the MD model dynamics to increasing amounts of monovalent salt.
 To our knowledge, no experimental $^{13}$C-NMR $R_1$ or $\tau_\mathrm e$ data exists as a function of monovalent salt concentration; therefore, the following discussion is kept qualitative.
@@ -1176,6 +1202,9 @@ Figure~\ref{fig:Teff-vs-Tsch} shows this correlation for systems studied in this
 \todo{Laske bilayerissa $S_\mathrm{CH}$:n korrelaatioaika (yksittaisessa lipidissa) vs $\tau_\mathrm e$. Tee scatter plot.}
 
 \section{Conclusions}
+\todo{SAMULI: I do not have time formulate but I think we should emphasize that for some segments we get order parameter, effective CT and $R_1$
+  correctly, meaning that conformational ensemble and dynamics is possible to capture. Also I would emphasize the results from cholesterol that headgroup dynamics
+is intact.}
 Open access databanks of MD trajectories enables the creation new scientific information without running a single new simulation. Here,
 we demonstrated this by investigating the dynamics of a wide range of phosphatidylcholine molecular dynamics models using the existing trajectories from the NMRlipids databank.
 
